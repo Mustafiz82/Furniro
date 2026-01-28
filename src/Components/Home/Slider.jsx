@@ -57,8 +57,8 @@ const slides = [
 const Slider = () => {
     return (
         <div className='bg-[#FCF8F3] py-10 my-10 '>
-            <div className='container  flex items-center overflow-hidden mx-auto'>
-                <div className='min-w-[400px] space-y-2'>
+            <div className='container px-5  flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-0 overflow-hidden  mx-auto'>
+                <div className='min-w-full lg:min-w-[400px] space-y-2'>
                     <h2 className='text-4xl font-semibold'>50+ Beautiful rooms
                         inspiration</h2>
                     <p>Our designer already made a lot of beautiful prototipe of rooms that inspire you</p>
@@ -66,10 +66,22 @@ const Slider = () => {
                 </div>
 
 
-                <div className='min-w-full h-[500px]'>
+                <div className='min-w-full '>
                     <Swiper
-                        slidesPerView={4}
-                        spaceBetween={30}
+                        breakpoints={{
+                            640: {
+                                slidesPerView: 1,
+                                spaceBetween: 20,
+                            },
+                            768: {
+                                slidesPerView: 2,
+                                spaceBetween: 40,
+                            },
+                            1024: {
+                                slidesPerView: 4,
+                                spaceBetween: 50,
+                            },
+                        }}
                         loop={true}
                         autoplay={{
                             delay: 1000
@@ -79,13 +91,13 @@ const Slider = () => {
                             clickable: true,
                         }}
                         modules={[Navigation, Pagination, Autoplay]}
-                        className="mySwiper"
+                        className="mySwiper !mb-20"
                     >
 
                         {
                             slides.map((item, index) => <SwiperSlide>
-                                <div className="relative">
-                                    <img className={'h-[400px] w-[300px]'} src={item.image} alt="" />
+                                <div className="relative !mb-10">
+                                    <img className={'h-[400px] w-full lg:w-[300px]'} src={item.image} alt="" />
                                     <div className="absolute  left-5 bottom-5 bg-white p-5">
 
                                         <h2 className='text-black/70'>{item.subTitle}</h2>

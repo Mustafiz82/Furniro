@@ -27,7 +27,7 @@ const furnitureByRoom = [
 ];
 
 
-const furnitureSizeArray = ["XS" , "S" , "M" , "L" , "XL"]
+const furnitureSizeArray = ["XS", "S", "M", "L", "XL"]
 
 const Product = () => {
 
@@ -44,34 +44,40 @@ const Product = () => {
     return (
         <div>
             <div className='bg-[#FFF3E3]  py-4'>
-                <div className='flex container mx-auto justify-between'>
-                    <div className='flex gap-1 items-center'>
+                <div className='flex lg:items-center  flex-col lg:flex-row px-5 w-full container mx-auto justify-between'>
+                    <div className='flex  gap-1 justify-between lg:justify-start items-center'>
 
                         <label className='flex gap-2 items-center cursor-pointer' htmlFor="my-drawer-1" >
                             <LiaSlidersHSolid />
                             <span >Filter</span>
                         </label>
 
-                        <span>|</span>
-                        <span className='text-sm ml-4'>Showing 1 - 16 Out of 32 result</span>
+                        <div className='flex items-center'>
+                            <span className='hidden lg:block'>|</span>
+                            <span className='text-sm ml-4'>Showing 1 - 16 Out of 32 result</span>
 
+                        </div>
                     </div>
-                    <div className='flex items-center  gap-2'>
-                        <span>Show</span>
-
-                        <input type="number" className='w-12 p-1 bg-white focus:outline-0' />
-                        <span>Sort By</span>
-
-                        <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="bg-white py-1 flex items-center gap-2 px-4 text-sm m-1">{selectedDropdown}
-                                <TiArrowSortedDown />  </div>
-                            <ul tabIndex="-1" className="dropdown-content text-sm menu bg-base-100 rounded-box z-1 w-44 p-2 shadow-sm">
-                                <li onClick={() => setSelectedDropdown("Default")} ><a> Default</a></li>
-                                <li onClick={() => setSelectedDropdown("Ascending")} ><a> Ascending</a></li>
-                                <li onClick={() => setSelectedDropdown("Decending")} ><a> Decending</a></li>
-                            </ul>
+                    <div className='flex justify-between lg:justify-end items-center  gap-2'>
+                        <div className='flex gap-2'>
+                            <span>Show</span>
+                            <input type="number" className='w-12 p-1 bg-white focus:outline-0' />
                         </div>
 
+                        <div className="flex items-center gap-2">
+                            <span>Sort By</span>
+
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="bg-white py-1 flex items-center gap-2 px-4 text-sm m-1">{selectedDropdown}
+                                    <TiArrowSortedDown />  </div>
+                                <ul tabIndex="-1" className="dropdown-content text-sm menu bg-base-100 rounded-box z-1 w-44 p-2 shadow-sm">
+                                    <li onClick={() => setSelectedDropdown("Default")} ><a> Default</a></li>
+                                    <li onClick={() => setSelectedDropdown("Ascending")} ><a> Ascending</a></li>
+                                    <li onClick={() => setSelectedDropdown("Decending")} ><a> Decending</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
 
 
 
@@ -80,7 +86,7 @@ const Product = () => {
             </div>
             <div className=' container mx-auto my-10 '>
 
-                <div className='grid grid-cols-4 gap-5'>
+                <div className='grid px-5 grid-cols-2 lg:grid-cols-4 gap-5'>
                     {
                         data.map(item => <ProductCard item={item} />)
                     }

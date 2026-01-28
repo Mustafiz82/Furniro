@@ -11,6 +11,7 @@ const Home = () => {
            <Range/>
            <OurProducts/>
            <Slider/>
+
         </div>
     );
 };

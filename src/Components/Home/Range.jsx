@@ -4,7 +4,7 @@ import range2 from "../../assets/Home/range2.png"
 import range3 from "../../assets/Home/range3.png"
 const Range = () => {
     return (
-        <div className='my-20'>
+        <div className=' mt-40 mb-20 px-5 lg:my-20'>
             <h2 className='text-3xl font-semibold text-center'>Browse The Range</h2>
             <p className='text-center '>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
 

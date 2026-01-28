@@ -25,8 +25,8 @@ const ProductCard = ({ item }) => {
                 </div>
                 <div className='p-4 space-y-1 bg-[#F4F5F7]'>
                     <h2 className='text-xl font-semibold'>{item.name}</h2>
-                    <p className='text-black/70 font-medium'>{item.description}</p>
-                    <div className='flex gap-2'>
+                    <p className='text-black/70 line-clamp-1 font-medium'>{item.description}</p>
+                    <div className='flex flex-col gap-2'>
                         <p className='text-lg font-semibold'>BDT {item.price}</p>
                         <del>{item.originalPrice}</del>
                     </div>
