@@ -13,6 +13,11 @@ import UserLayout from "../Layout/UserLayout";
 import UserDashboard from "../pages/Dashboard/UserDashboard";
 import MyOrder from "../pages/Dashboard/MyOrder";
 import MyProfile from "../pages/Dashboard/MyProfile";
+import AdminLayout from "../Layout/AdminLayout";
+import Admin from "../pages/Admin/Admin";
+import ManageProducts from "../pages/Admin/manage-product/ManageProducts";
+import AddProduct from "../pages/Admin/manage-product/AddProduct";
+import ManageCategory from "../pages/Admin/manage-cateogory/ManageCategory";
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +81,37 @@ export const router = createBrowserRouter([
          path : "/dashboard/my-profile",
         element : <MyProfile/>
       }
+    ]
+
+  },
+  {
+    path : "/admin",
+    element : <AdminLayout/>,
+    children : [
+      {
+        path : "/admin",
+        element : <Admin/>
+      },
+      {
+        path : "/admin/manage-products",
+        element : <ManageProducts/>
+      },
+      {
+        path : "/admin/manage-products/add",
+        element : <AddProduct/>
+      },
+      {
+        path : "/admin/manage-category",
+        element : <ManageCategory/>
+      },
+      // {
+      //   path : "/dashboard/my-orders",
+      //   element : <MyOrder/>
+      // },
+      // {
+      //    path : "/dashboard/my-profile",
+      //   element : <MyProfile/>
+      // }
     ]
 
   }

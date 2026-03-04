@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, Outlet } from 'react-router';
+import { AuthContext } from '../context/AuthContext';
 
 const UserLayout = () => {
+
+    const {handleLogout} = useContext(AuthContext)
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
@@ -15,7 +18,11 @@ const UserLayout = () => {
                     {/* Sidebar content here */}
                     <p className='hover:bg-gold-light py-3 cursor-pointer px-4 '><Link to={"/dashboard"}>Dashboard</Link></p>
                     <p className='hover:bg-gold-light py-3 cursor-pointer px-4 '><Link to={"/dashboard/my-orders"}>My Orders</Link></p>
-                    <p className='hover:bg-gold-light py-3 cursor-pointer px-4 '><Link to={"/dashborad/my-profile"} href="">My profile</Link></p>
+                    <p className='hover:bg-gold-light py-3 cursor-pointer px-4 '><Link to={"/dashboard/my-profile"} href="">My profile</Link></p>
+
+                    <p onClick={handleLogout} className='hover:bg-gold-light py-3 mt-auto cursor-pointer px-4 '>
+                        LogOut
+                    </p>
                 </ul>
             </div>
         </div>

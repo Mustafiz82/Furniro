@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import logo from "../assets/logo.png"
 import { Link, NavLink } from 'react-router';
 import { MdMenu, MdOutlinePersonOutline } from 'react-icons/md';
@@ -6,11 +6,15 @@ import { IoSearch } from 'react-icons/io5';
 import { FaRegHeart, FaSearch } from 'react-icons/fa';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { data } from '../Data/products';
+import { AuthContext } from '../context/AuthContext';
 const Nav = () => {
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+    const { user } = useContext(AuthContext)
 
-    console.log(isDrawerOpen)
+
+
+
 
     const ul = <>
 
@@ -80,11 +84,17 @@ const Nav = () => {
                     </ul>
                 </div>
                 <div className="navbar-end flex gap-3 lg:gap-8 ">
-                    <MdOutlinePersonOutline className='text-xl hover:text-antique-gold duration-300' />
                     <IoSearch onClick={hanldleSearch} className='text-xl hover:text-antique-gold duration-300' />
-                    <FaRegHeart className='text-xl hover:text-antique-gold duration-300' />
-                    <Link to={"/cart"} >  <AiOutlineShoppingCart className='text-xl hover:text-antique-gold duration-300' /></Link>
+                    {user ? <><FaRegHeart className='text-xl hover:text-antique-gold duration-300' />
+                        <Link to={"/cart"} >  <AiOutlineShoppingCart className='text-xl hover:text-antique-gold duration-300' /></Link>
+                        <Link to="/dashboard">  <MdOutlinePersonOutline className='text-xl hover:text-antique-gold duration-300' /> </Link> </> : <>
+                        <Link to={"/login"} >Login</Link>
+
+                    </>}
+
                 </div>
+
+
             </div>
 
 
@@ -102,7 +112,7 @@ const Nav = () => {
             </div>
 
 
-            
+
             {/* <div  onClick={() => {
                 setIsDrawerOpen(false)
                 console.log(isDrawerOpen)
