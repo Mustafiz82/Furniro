@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../../firebase.config";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import axiosPUblic from "../axios/axiosPublic";
 
 export const AuthContext = createContext(null)
 
@@ -12,6 +13,17 @@ const AuthProvider = ({ children }) => {
         const provider = new GoogleAuthProvider()
         const response = await signInWithPopup(auth, provider)
         console.log(response.user)
+
+        axiosPUblic.post("/user", {
+            name: response.user.displayName,
+            email: response.user.email,
+            role: "user"
+        })
+            .then(res => {
+                console.log(res.data)
+
+            })
+            .catch(err => console.log(err))
         setUser(response.user)
         window.location.href = "/"
     }
@@ -27,11 +39,11 @@ const AuthProvider = ({ children }) => {
 
     const handleLogout = () => {
         signOut(auth)
-        .then(() => {
-            setUser(null)
-            // console.log("user logged out")
-        })
-        .catch(err => console.log(err))
+            .then(() => {
+                setUser(null)
+                // console.log("user logged out")
+            })
+            .catch(err => console.log(err))
     }
 
 
@@ -40,7 +52,7 @@ const AuthProvider = ({ children }) => {
         setUser,
         handleGoogleSignIn,
         handleEmailPassSignUp,
-        handleEmailPassSignin , 
+        handleEmailPassSignin,
         handleLogout
     }
 

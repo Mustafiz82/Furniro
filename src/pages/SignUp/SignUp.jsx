@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../context/AuthContext';
 import { updateProfile } from 'firebase/auth';
 import { auth } from '../../../firebase.config';
+import axios from 'axios';
+import axiosPUblic from '../../axios/axiosPublic';
 
 const SignUp = () => {
 
@@ -37,7 +39,14 @@ const SignUp = () => {
                     displayName: name
                 })
                     .then(res => {
-                        navigate("/")
+                        axiosPUblic.post("/user", {
+                            email, name, role: "user"
+                        })
+                            .then(res => {
+                                console.log(res.data)
+                                navigate("/")
+                            })
+                            .catch(err => console.log(err))
                     })
             })
             .catch(err => console.log(error))

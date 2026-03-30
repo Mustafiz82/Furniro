@@ -1,9 +1,8 @@
 import React, { useState, useRef, useMemo, useCallback } from 'react';
 import JoditEditor from 'jodit-react';
 
-function Editor() {
+function Editor({content, setContent}) {
   const editor = useRef(null);
-  const [content, setContent] = useState('');
 
   const config = useMemo(
     () => ({
