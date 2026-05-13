@@ -7,6 +7,7 @@ import { TiArrowSortedDown } from 'react-icons/ti';
 import RangeSlider from 'react-range-slider-input';
 import 'react-range-slider-input/dist/style.css';
 import { GrSync } from 'react-icons/gr';
+import useFetch from '../../hook/useFetch';
 
 
 const furnitureByStyle = [
@@ -37,6 +38,7 @@ const Product = () => {
     const [roomLocation, setRoomLocation] = useState("")
     const [roomStyle, setRoomStyle] = useState("")
     const [furnitureSize, setFurnitureSize] = useState("")
+    const { data } = useFetch("/product")
 
 
     console.log(roomLocation)
@@ -88,7 +90,7 @@ const Product = () => {
 
                 <div className='grid px-5 grid-cols-2 lg:grid-cols-4 gap-5'>
                     {
-                        data.map(item => <ProductCard item={item} />)
+                        data?.map(item => <ProductCard item={item} />)
                     }
                 </div>
 

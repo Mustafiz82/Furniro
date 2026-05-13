@@ -18,6 +18,8 @@ import Admin from "../pages/Admin/Admin";
 import ManageProducts from "../pages/Admin/manage-product/ManageProducts";
 import AddProduct from "../pages/Admin/manage-product/AddProduct";
 import ManageCategory from "../pages/Admin/manage-cateogory/ManageCategory";
+import EditProduct from "../pages/Admin/manage-product/EditProduct";
+import WishList from "../pages/wishlist/WishList";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path : "/cart" , 
         element : <Cart/>
+      },
+      {
+        path : "/wishlist" , 
+        element : <WishList/>
       },
       {
         path : "/compare" , 
@@ -99,6 +105,10 @@ export const router = createBrowserRouter([
       {
         path : "/admin/manage-products/add",
         element : <AddProduct/>
+      },
+      {
+        path : "/admin/manage-products/edit/:id",
+        element : <EditProduct/>
       },
       {
         path : "/admin/manage-category",

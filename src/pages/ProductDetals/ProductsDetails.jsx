@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import image1 from "../../assets/ProductDetails/Asgaard sofa 3.png"
 import image2 from "../../assets/ProductDetails/Group 98.png"
@@ -12,25 +12,34 @@ import { FaFacebook, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 import { FaX, FaXTwitter } from 'react-icons/fa6';
 import { data } from '../../Data/products';
 import ProductCard from '../../Components/Home/ProductCard';
+import useFetch from '../../hook/useFetch';
+import { useParams } from 'react-router';
 
 
 const ProductsDetails = () => {
 
-    const [selectedImage, setSelectedImage] = useState(image1)
-    const [selectedSize , setSelectedSize] = useState("L")
-    const [quantity , setQuantity]  = useState(10)
-
+    const {id} = useParams()
+    const { data: product } = useFetch(`/product/${id}`)
+    const [selectedImage, setSelectedImage] = useState(product?.images?.[0])
+    const [selectedSize, setSelectedSize] = useState("L")
+    const [quantity, setQuantity] = useState(10)
+    const { data } = useFetch("/product")
 
     const handleDecreaseQuantity = () => {
-       if(quantity > 1){
-        setQuantity(quantity - 1)
-       }
+        if (quantity > 1) {
+            setQuantity(quantity - 1)
+        }
     }
 
 
     const handleIncreaseQuantity = () => {
         setQuantity(quantity + 1)
     }
+
+
+    useEffect(() => {
+        setSelectedImage(product?.images?.[0])
+    } , [product])
 
     return (
         <div>
@@ -46,14 +55,17 @@ const ProductsDetails = () => {
             </div>
 
 
-            <div className='flex container mx-auto gap-10 my-10'>
+            <div className='flex max-w-5xl mx-auto gap-10 my-10'>
                 <div className='flex-1 flex gap-5'>
                     <div className='space-y-4 m'>
-                        <img onClick={() => setSelectedImage(image1)} src={image1} className='w-15 h-15 bg-gold-light rounded-lg' alt="" />
-                        <img onClick={() => setSelectedImage(image2)} src={image2} className='w-15 h-15 bg-gold-light rounded-lg' alt="" />
-                        <img onClick={() => setSelectedImage(image3)} src={image3} className='w-15 h-15 bg-gold-light rounded-lg' alt="" />
-                        <img onClick={() => setSelectedImage(image4)} src={image4} className='w-15 h-15 bg-gold-light rounded-lg' alt="" />
-                        <img onClick={() => setSelectedImage(image5)} src={image5} className='w-15 h-15 bg-gold-light rounded-lg' alt="" />
+                      
+
+                        {
+                            product?.images?.map(item =>   <img onClick={() => setSelectedImage(item)} src={item} className='w-15 h-15 bg-gold-light rounded-lg' alt="" />)
+                        }
+
+
+
                     </div>
                     <div>
                         <img src={selectedImage} className='w-92 h-92  bg-gold-light rounded-lg' alt="" />
@@ -63,11 +75,11 @@ const ProductsDetails = () => {
 
 
                 <div className='flex-1'>
-                    <h2 className='text-4xl'>Asgard Sofa </h2>
-                    <p className='text-2xl text-black/70 mt-2'>BDT  300000</p>
+                    <h2 className='text-4xl'>{product?.productName}</h2>
+                    <p className='text-2xl text-black/70 mt-2'>BDT {product?.price}</p>
                     <div className='my-2 flex gap-2 items-center'>
                         <Rating
-                            fullSymbol={<IoStarSharp className='text-antique-gold'/>}
+                            fullSymbol={<IoStarSharp className='text-antique-gold' />}
                             emptySymbol={<IoStarOutline className='text-antique-gold' />}
                             readonly
                             initialRating={4.5}
@@ -79,25 +91,17 @@ const ProductsDetails = () => {
                         <span className='text-black/70'>5 customer review</span>
                     </div>
 
-                    <p>Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.</p>
+                    <p dangerouslySetInnerHTML={{__html : product?.description}}></p>
 
 
-                    <h2 className=' text-black/70 mt-5'>Size</h2>
-
-                    <div className='flex gap-4 mt-2'>
-                       {
-                         ["L" , "XL" , "XS"].map(item =>   <span onClick={() => setSelectedSize(item)} className={`    ${selectedSize == item ? "bg-antique-gold text-white" : "bg-gold-light text-black"}  text-md w-10 flex  items-center justify-center h-10 rounded-lg cursor-pointer `}>{item}</span> )
-                       }
-                      
-                    </div>
-
+                 
 
 
                     <div className='mt-5 flex gap-4'>
                         <div className='p-2 w-fit flex gap-1 justify-between items-center border rounded-lg '>
-                            <span className='cursor-pointer p-1' onClick={handleDecreaseQuantity} ><FiMinus/> </span>
+                            <span className='cursor-pointer p-1' onClick={handleDecreaseQuantity} ><FiMinus /> </span>
                             <span>{quantity}</span>
-                            <span className='cursor-pointer p-1 ' onClick={handleIncreaseQuantity}><FiPlus/></span>
+                            <span className='cursor-pointer p-1 ' onClick={handleIncreaseQuantity}><FiPlus /></span>
                         </div>
 
                         <div className="p-2 w-fit flex gap-1 justify-between items-center border rounded-lg ">
@@ -108,22 +112,30 @@ const ProductsDetails = () => {
                         </div>
                     </div>
 
-                    <hr className='mt-5 text-black/30'/>
+                    <hr className='mt-5 text-black/30' />
 
 
-                    <div className='grid text-black/70 mt-10 gap-y-1  grid-cols-[100px_1fr]'>
+                    <div className='grid text-black/70 mt-10 gap-y-1  grid-cols-[200px_1fr]'>
                         <p>SKU</p>
-                        <p>: SS001</p>
-                        <p>Category</p>
-                        <p>: Sofas</p>
-                        <p>Tags</p>
-                        <p>: Sofas , Chair , Home , Shop</p>
+                        <p>: {product?._id}</p>
+                        <p className='capitalize'>Category</p>
+                        <p>: {product?.category}</p>
+                        <p className='capitalize'>sales Package</p>
+                        <p>: {product?.salesPackage}</p>
+                        <p className='capitalize'>secondary Matrial</p>
+                        <p>: {product?.secondaryMatrial}</p>
+                        <p className='capitalize'>filling Material</p>
+                        <p>: {product?.fillingMaterial}</p>
+                        <p className='capitalize'>upholstery Material</p>
+                        <p>: {product?.upholsteryMaterial}</p>
+                      
+
                         <p>Share</p>
                         <div className='flex items-center gap-4'>
-                            : <FaFacebook/> <FaLinkedinIn/> <FaXTwitter />
+                            : <FaFacebook /> <FaLinkedinIn /> <FaXTwitter />
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -131,11 +143,11 @@ const ProductsDetails = () => {
             <h2 className='text-2xl font-semibold text-center my-10 mt-20'>Related Product</h2>
 
 
-            <div className='container grid grid-cols-4 gap-5 mx-auto'>
-                
+            <div className='max-w-5xl grid grid-cols-4 gap-5 mx-auto'>
+
 
                 {
-                    data.slice(0 , 4).map(item => <ProductCard item={item}/>)
+                    data?.slice(0, 4).map(item => <ProductCard item={item} />)
                 }
 
             </div>

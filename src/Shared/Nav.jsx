@@ -85,7 +85,7 @@ const Nav = () => {
                 </div>
                 <div className="navbar-end flex gap-3 lg:gap-8 ">
                     <IoSearch onClick={hanldleSearch} className='text-xl hover:text-antique-gold duration-300' />
-                    {user ? <><FaRegHeart className='text-xl hover:text-antique-gold duration-300' />
+                    {user ? <> <Link to={"/wishlist"}><FaRegHeart className='text-xl hover:text-antique-gold duration-300' /></Link>
                         <Link to={"/cart"} >  <AiOutlineShoppingCart className='text-xl hover:text-antique-gold duration-300' /></Link>
                         <Link to="/dashboard">  <MdOutlinePersonOutline className='text-xl hover:text-antique-gold duration-300' /> </Link> </> : <>
                         <Link to={"/login"} >Login</Link>
