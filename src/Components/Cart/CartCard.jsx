@@ -12,6 +12,7 @@ const cartCard = ({ item , refetch  , updatedCartData , setUpdateCartData}) => {
 
 
   const [quantity, setQuantity] = useState(1);
+
   console.log(quantity);
 
   const handleDelete = () => {
@@ -41,18 +42,9 @@ const cartCard = ({ item , refetch  , updatedCartData , setUpdateCartData}) => {
 
 //   console.log(item);
 
-  const handleUpdateState = () => {
+  const handleUpdateState = (qty ) => {
 
-    const matched = updatedCartData.find(cartItem => item?.cartID === cartItem?.cartID )
-    const otherCartItem = updatedCartData.filter(cartItem => item?.cartID !== cartItem?.cartID )
-
-    console.log(updatedCartData);
-    console.log(item?.cartID);
-
-    matched.quantity = quantity
-
-    console.log(matched);
-    setUpdateCartData([...otherCartItem , matched ])
+    setUpdateCartData(prev => prev.map(cartItem => (cartItem.cartID == item?.cartID) ? {...cartItem , quantity : qty  }  : cartItem ) )
 
 
   }
@@ -79,7 +71,7 @@ const cartCard = ({ item , refetch  , updatedCartData , setUpdateCartData}) => {
               value={quantity}
               onChange={(e) => {
                 setQuantity(e.target.value)
-                handleUpdateState()
+                handleUpdateState(e.target.value)
               }}
               className="p-2 border border-black/50 w-10 flex justify-center rounded-lg text-black"
             />
@@ -87,12 +79,15 @@ const cartCard = ({ item , refetch  , updatedCartData , setUpdateCartData}) => {
               <FaPlus
                 onClick={() =>{
                      setQuantity(quantity + 1)
-                    handleUpdateState()
+                    handleUpdateState(quantity + 1)
                 }}
                 className="bg-antique-gold text-white p-1 text-xl"
               />
               <FaMinus
-                onClick={() => quantity > 1 && setQuantity(quantity - 1)}
+                onClick={() => {
+                  quantity > 1 && setQuantity(quantity - 1)
+                   handleUpdateState(quantity - 1)
+                }}
                 className="bg-antique-gold text-white p-1 text-xl"
               />
             </div>

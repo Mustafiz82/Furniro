@@ -4,26 +4,14 @@ import { MdDelete } from "react-icons/md";
 import useFetch from "../../hook/useFetch";
 import { AuthContext } from "../../context/AuthContext";
 import CartCard from "./CartCard";
+import { Link } from "react-router";
+import { CartContext } from "../../context/CartContext";
 const CartData = () => {
-  const { user } = useContext(AuthContext);
 
-  const { data: cartData, refetch } = useFetch(`/cart/${user?.email}`);
+  const { updatedCartData, setUpdateCartData, refetch , totalPrice} =
+    useContext(CartContext);
 
-  const [updatedCartData, setUpdateCartData] = useState(cartData || []);
-
-  const totalPrice = updatedCartData?.reduce((acc , cv) => acc + (parseInt(cv.price) *( cv?.quantity || 1)) , 0)
-
-  console.log(totalPrice);
-
-  useEffect(() => {
-    refetch();
-  }, [user?.email]);
-
-  useEffect(() => {
-    if (cartData) {
-      setUpdateCartData(cartData);
-    }
-  }, [cartData]);
+    console.log(updatedCartData);
 
   return (
     <div className="w-full px-5 pb-20 container mx-auto mt-10">
@@ -65,9 +53,12 @@ const CartData = () => {
           </div>
 
           <div className="flex justify-center">
-            <button className="btn  btn-outline rounded-xl  px-10 py-6">
+            <Link
+              to={"/checkout"}
+              className="btn  btn-outline rounded-xl  px-10 py-6"
+            >
               Checkout
-            </button>
+            </Link>
           </div>
         </div>
       </div>

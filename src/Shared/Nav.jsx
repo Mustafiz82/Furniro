@@ -7,12 +7,15 @@ import { FaRegHeart, FaSearch } from 'react-icons/fa';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { data } from '../Data/products';
 import { AuthContext } from '../context/AuthContext';
+import { CartContext } from '../context/CartContext';
 const Nav = () => {
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const { user } = useContext(AuthContext)
+    const value = useContext(CartContext)
 
 
+    console.log(value);
 
 
 
